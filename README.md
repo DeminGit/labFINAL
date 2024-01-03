@@ -73,6 +73,45 @@ public void colideWithPerson(Policemen policemen, String person) {
     }
 }
 
+Локальный класс `ReactionToAntiGravity` используется для имитации реакции полицейского на отсутствие гравитации:
+
+```java
+public void feel(String what) {
+    // ...
+    class ReactionToAntiGravity {
+        void react() {
+            // Реализация метода
+        }
+    }
+    ReactionToAntiGravity reaction = new ReactionToAntiGravity();
+    reaction.react();
+    // ...
+}
+
+
+Этот класс определен внутри метода и используется для немедленного реагирования на изменения в окружающей среде, что отлично демонстрирует принцип инкапсуляции и обеспечивает локализацию поведения в пределах метода.
+
+Анонимный класс
+
+реализует уход почвы из под ног полицейского (вместо создания класса Soil мой выбор пал на анонимный класс)
+   
+policemen[0].feelGroundShift(new GroundShiftable() {
+            @Override
+            public void shift() {
+                System.out.println("Почва ушла из-под ног у персонажа - " + policemen[0].toString());
+                policemen[0].setMood(Mood.RAGE.getDescription());
+
+  }
+  });
+
+policemen[1].feelGroundShift(new GroundShiftable() {
+  @Override
+  public void shift() {
+      System.out.println("Почва ушла из-под ног у персонажа - " + policemen[1].toString());
+      policemen[0].setMood(Mood.RAGE.getDescription());
+            }
+        });
+
 
 
    
