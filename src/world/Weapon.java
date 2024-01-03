@@ -8,10 +8,12 @@ public enum Weapon {
     FISTS("кулаки");
 
     private String description;
-    Weapon(String description){
+
+    Weapon(String description) {
         this.description = description;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 }

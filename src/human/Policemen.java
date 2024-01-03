@@ -12,10 +12,12 @@ import java.util.Objects;
 
 public class Policemen extends Person implements Movable, Attackable, Feelable {
     private Sense sense;
+    private int healthPoints;
 
     public Policemen(String name, String mood, String weapon, String movement, String location, String willing, Sense sense, int healthPoints) {
         super(name, mood, weapon, movement, location, willing, healthPoints);
         this.sense = sense;
+        this.healthPoints = healthPoints;
     }
 
 
@@ -32,6 +34,14 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
         } else {
             return super.getWeapon(); // Возвращает оружие без описания
         }
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
     }
 
     @Override
@@ -89,21 +99,21 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
 
     @Override
     public void toBreak() {
-
+        super.setMovement(Movement.NO_MOVEMENT.getDescription());
         System.out.println(this + " разбил предмет - " + Devices.BAROMETER.getDescription());
 
     }
 
     @Override
     public void fracture() {
-
+        super.setWilling(Willing.HZWILLING.getDescription());
         System.out.println(this + " разломал предмет - " + Devices.SEISMOGRAPH.getDescription());
     }
 
 
     @Override
     public void riddleWith() {
-
+        super.setMood(Mood.COOL.getDescription());
         System.out.println(this + " изрешетил пулями - " + Devices.RAIN_GAUGE.getDescription());
     }
 
@@ -137,6 +147,7 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
         System.out.println(this + " почувствовал уход почвы ");
 
         // локальный класс ReactionToAntiGravity
+        // мгновенная реакция полицейского на антигравитейшн
         // с вероятностью 20% полицейский роняет ружье
 
         class ReactionToAntiGravity {
@@ -159,15 +170,16 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
 
     // вложенный non static class
     // попытка удержаться в воздухе делает смысл действия бессмысленным
+    // если полицейский уронил до этого оружие, то он машет руками
+
     private class BalanceAttempt {
         void tryToBalance() {
             sense.setStability(Statable.NO_PRESENSE_OF_MEANING);
             setMood(Mood.RAGE.getDescription());
             System.out.println("Полицейский пытается удержаться в воздухе.");
-            if (getWeapon("default") == Weapon.FISTS.getDescription()) {
+            if (getWeapon("default").equals(Weapon.FISTS.getDescription())) {
                 waveArms();
             }
-
         }
     }
 
@@ -203,9 +215,9 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
 
     }
 
-
     @Override
     public void colide() {
+        setHealthPoints(getHealthPoints() - 3);
         System.out.println(this + " столкнулся с другим полицейским");
     }
 
@@ -224,15 +236,19 @@ public class Policemen extends Person implements Movable, Attackable, Feelable {
     @Override
     public void flyDown() {
         setMovement(Movement.FLY_DOWN.getDescription());
-        System.out.println(this);
         System.out.println(this + " летит вниз");
     }
 
 
     // вложенный статик класс земля
     public static class Ground {
-        public void colideWithPerson(String person) {
-            System.out.println(this + " столкнулась с персонажем " + person);
+        public void colideWithPerson(Policemen policemen, String person) {
+            System.out.println("Столкновение с персонажем " + person);
+            // Вычитаем очки здоровья
+            policemen.setHealthPoints(policemen.getHealthPoints() - 10);
+            // Выводим новое значение здоровья полицейского
+            System.out.println("Здоровье полицейского: " + policemen.getHealthPoints());
+
 
         }
 

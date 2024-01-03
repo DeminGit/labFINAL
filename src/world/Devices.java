@@ -10,10 +10,12 @@ public enum Devices {
 
 
     private String description;
-    Devices(String description){
+
+    Devices(String description) {
         this.description = description;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 }

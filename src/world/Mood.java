@@ -11,10 +11,12 @@ public enum Mood {
     CONFUSED("растерянное");
 
     private String description;
-    Mood(String description){
+
+    Mood(String description) {
         this.description = description;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 

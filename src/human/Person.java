@@ -16,6 +16,7 @@ public abstract class Person {
         this.mood = mood;
         this.location = location;
         this.willing = willing;
+        this.healthPoints = healthPoints;
 
     }
 

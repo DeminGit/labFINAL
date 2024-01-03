@@ -6,10 +6,12 @@ public enum Willing {
     HZWILLING("непонятно имеет ли желание");
 
     private String description;
-    Willing(String description){
+
+    Willing(String description) {
         this.description = description;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 }

@@ -1,10 +1,13 @@
+import Exceptions.IllegalLanguageException;
 import Exceptions.IllegalGravityException;
 import actions.GroundShiftable;
 import human.*;
 import world.*;
 
 public class Main {
+
     public static void main(String[] args) {
+        int attemptCount = 0;
 
         Sense sense = new Sense(Statable.PRESENSE_OF_MEANING, "здравый смысл");
 
@@ -20,7 +23,6 @@ public class Main {
                 Movement.NO_MOVEMENT.getDescription(), Location.STREET.getDescription(),
                 Willing.HZWILLING.getDescription(), sense,100);
 
-
         policemen[1] = new Policemen("Man2", Mood.COMMON.getDescription(),
                 Weapon.GUN.getDescription(),
                 Movement.NO_MOVEMENT.getDescription(), Location.STREET.getDescription(),
@@ -33,11 +35,9 @@ public class Main {
                 Movement.NO_MOVEMENT.getDescription(), Location.NEAR_ROCKET.getDescription(),
                 Willing.HZWILLING.getDescription(), gravity, sense,100);
 
-
         riggle.getSureInObject("ракета");
         riggle.hit();
         riggle.scream();
-
 
         for (Policemen policeman : policemen) {
             policeman.shooting();
@@ -49,31 +49,41 @@ public class Main {
             policeman.riddleWith();
             policeman.climb();
             policeman.finalAction();
-
         }
 
         try {
             znayka.say("Это что же за варварство такое!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Упс! Знайка не знает этот язык." + e.getMessage());
+        } catch (IllegalLanguageException e) {
+            System.out.println("Упс! Знайка не знает этот язык: " + e.getMessage());
         }
 
-        znayka.BecomeAngry();
+        znayka.becomeAngry();
 
         try {
-            znayka.say("Ну ,подождите-ка ,я покажу вам!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Упс! Знайка не знает этот язык." + e.getMessage());
+            znayka.say("Ну, подождите-ка, я покажу вам!");
+        } catch (IllegalLanguageException e) {
+            System.out.println("Упс! Знайка не знает этот язык: " + e.getMessage());
         }
 
 
         while (true) {
             try {
-                znayka.TurnOn();
+                znayka.turnOn();
                 break; // Если исключения не было, выходим из цикла
             } catch (IllegalGravityException e) {
-                System.out.println("Произошла ошибка: " + e.getMessage() + " Доктор Стрэндж перемещает Знайку во времени в момент включения прибора невесомости! Знайка заново включает прибор невесомости!");
 
+                System.out.println(e.getMessage() + " Доктор Стрэндж переносит Знайку назад во времени " +
+                        "в момент включения прибора! Знайка снова включает прибор...");
+                attemptCount++;
+                if (attemptCount >= 3) { // Если было более 3 попыток
+
+                    System.out.println("Превышено допустимое количество переносов во времени " +
+                            "Доктором Стрэнджем. Доктор Стрэндж разочаровался от беспомощности " +
+                            "Знайки и вернулся в свою вселенную.");
+
+                    System.out.println("Вселенная Знайки уничтожена.");
+                    System.exit(1); // Завершаем выполнение программы с кодом ошибки 1
+                }
             }
         }
 
@@ -121,7 +131,7 @@ public class Main {
 
         Policemen.Ground ground = new Policemen.Ground();
         for (Policemen policeman : policemen) {
-            ground.colideWithPerson(policeman.getName());
+            ground.colideWithPerson(policeman,policeman.getName());
         }
     }
 }

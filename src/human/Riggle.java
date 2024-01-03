@@ -13,7 +13,6 @@ public class Riggle extends Person implements Beatable, Mindable {
 
     private Sense sense;
 
-
     public Riggle(String name, String mood, String weapon, String movement, String location, String willing, Sense sense, int healthPoints) {
         super(name, mood, weapon, movement, location, willing,healthPoints);
         this.sense = sense;
@@ -23,24 +22,25 @@ public class Riggle extends Person implements Beatable, Mindable {
     public void hit() {
         super.setMood(Mood.RAGE.getDescription());
         System.out.println(getWeapon());
-        System.out.println(toString() + " взмахнул предметом - " + super.getWeapon());
+        System.out.println(this + " взмахнул предметом - " + super.getWeapon());
     }
 
     public void getSureInObject(String obj) {
         super.setLocation(Location.STREET.getDescription());
         super.setMood(Mood.KAIF.getDescription());
         super.setMovement(Movement.NO_MOVEMENT.getDescription());
-        System.out.println(toString() + " убедился в сохранности объекта - " + obj);
+        System.out.println(this + " убедился в сохранности объекта - " + obj);
 
     }
 
     public void scream() {
-        System.out.println(toString() + " закричал");
+        super.setMood(Mood.CONFUSED.getDescription());
+        System.out.println(this + " закричал");
     }
 
     @Override
     public String getWeapon() {
-        return "> " + toString() + " держит в руках предмет - " + super.getWeapon();
+        return "> " + this + " держит в руках предмет - " + super.getWeapon();
     }
 
     @Override

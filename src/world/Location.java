@@ -10,10 +10,12 @@ public enum Location {
 
 
     private String description;
-    Location(String description){
+
+    Location(String description) {
         this.description = description;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
 }
